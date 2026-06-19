@@ -1,0 +1,8 @@
+backend/venv/
+backend/__pycache__/
+backend/movielens.db
+backend/ml-100k-data/
+backend/ml-100k.zip
+node_modules/
+frontend/dist/
+.DS_Store

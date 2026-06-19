@@ -1,0 +1,27 @@
+\clearpage
+\phantomsection
+\addcontentsline{toc}{chapter}{Mở đầu}
+\chapter*{Mở đầu}
+
+\section*{Bối cảnh và động lực}
+Ngày nay, các tổ chức thường xuyên công bố những tập dữ liệu lớn về hành vi cá nhân - lịch sử mua hàng, đánh giá phim, lượt nghe nhạc, vị trí di chuyển - phục vụ nghiên cứu, khuyến nghị và khai phá dữ liệu. Để bảo vệ người dùng, các đơn vị này thường ``ẩn danh hóa'' dữ liệu bằng cách loại bỏ tên, số định danh và các thông tin nhận dạng trực tiếp. Một quan niệm phổ biến cho rằng: chỉ cần gỡ bỏ thông tin định danh là dữ liệu đã an toàn.
+
+Năm 2008, Arvind Narayanan và Vitaly Shmatikov đã bác bỏ quan niệm đó. Trong công trình \textit{``Robust De-anonymization of Large Sparse Datasets''}~\cite{narayanan}, hai tác giả chứng minh rằng với một tập dữ liệu thưa và nhiều chiều (như lịch sử xem phim), kẻ tấn công chỉ cần biết một vài thông tin bên lề về nạn nhân là đủ để xác định chính xác bản ghi của người đó và phơi bày toàn bộ phần dữ liệu còn lại. Họ áp dụng phương pháp này lên tập dữ liệu Netflix Prize - gồm hơn 100 triệu lượt đánh giá phim của 500.000 thuê bao - và định danh thành công nhiều cá nhân, làm lộ cả những thông tin nhạy cảm như xu hướng chính trị hay sở thích cá nhân. Kết quả này về sau dẫn tới một vụ kiện và khiến Netflix hủy bỏ cuộc thi Netflix Prize lần thứ hai.
+
+Đây là một trong những minh chứng nền tảng cho thấy ``ẩn danh hóa'' không đồng nghĩa với ``riêng tư'', và là bài học cốt lõi trong lĩnh vực an toàn dữ liệu nói chung cũng như an ninh trên thiết bị, ứng dụng di động nói riêng - nơi dữ liệu hành vi người dùng được thu thập với mật độ dày đặc.
+
+\section*{Mục tiêu}
+Báo cáo đặt ra các mục tiêu sau:
+\renewcommand{\labelitemi}{$-$}
+\begin{itemize}
+	\item Nghiên cứu và trình bày lại mô hình tấn công giải ẩn danh của Narayanan-Shmatikov: nền tảng lý thuyết (độ thưa, độ tương tự, định nghĩa rò rỉ riêng tư) và thuật toán Scoreboard-RH.
+	\item Xây dựng, tối ưu và nâng cấp một ứng dụng web mô phỏng cuộc tấn công trên tập dữ liệu công khai MovieLens 100k, đóng vai proxy cho tập Netflix.
+	\item Thực nghiệm định lượng thật để kiểm chứng các kết luận của bài báo gốc: cần bao nhiêu tri thức bổ trợ để định danh thành công, và mức độ bền vững của tấn công trước thông tin sai lệch.
+	\item Thảo luận ý nghĩa về quyền riêng tư và các biện pháp phòng vệ.
+\end{itemize}
+
+\section*{Phạm vi và phương pháp}
+Toàn bộ thực nghiệm chỉ thao tác trên tập dữ liệu công khai MovieLens 100k, trong môi trường cục bộ, không nhằm vào bất kỳ cá nhân hay hệ thống thật nào. Mọi số liệu, biểu đồ và ảnh chụp màn hình trong báo cáo đều là kết quả thật, sinh ra trực tiếp từ việc chạy ứng dụng do chúng em phát triển. Ngôn ngữ cài đặt là Python (engine tấn công, FastAPI) và JavaScript/React (giao diện).
+
+\section*{Cấu trúc báo cáo}
+Chương~\ref{chap:background} trình bày cơ sở lý thuyết về bài toán giải ẩn danh và thuật toán Scoreboard-RH. Chương~\ref{chap:design} phân tích bài toán và thiết kế kiến trúc hệ thống mô phỏng. Chương~\ref{chap:impl} mô tả chi tiết việc cài đặt thuật toán cùng những tối ưu, nâng cấp so với bản demo ban đầu. Chương~\ref{chap:exp} trình bày kịch bản demo và các kết quả thực nghiệm định lượng. Chương~\ref{chap:conclusion} thảo luận biện pháp phòng vệ, nêu hạn chế và kết luận.

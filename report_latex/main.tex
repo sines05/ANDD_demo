@@ -1,0 +1,209 @@
+\documentclass[a4paper,12pt,oneside]{book}
+\usepackage{times}
+\usepackage[utf8]{vietnam}
+\usepackage[shortlabels]{enumitem}
+\usepackage{booktabs}
+\usepackage{colortbl}
+\usepackage{setspace}
+\usepackage{amsmath,amssymb}
+\hyphenation{Journal Journals}
+\usepackage[left=3cm,right=2cm,top=2.5cm,bottom=3cm,footskip=40pt]{geometry}
+\usepackage{array}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\usepackage{tabularx}
+\usepackage{multirow}
+\usepackage{multicol}
+\usepackage{longtable}
+\setcounter{secnumdepth}{4}
+\usepackage{placeins}
+\usepackage{indentfirst}
+\setlength{\parindent}{1cm}
+\usepackage{color}
+\usepackage{fancyhdr}
+\usepackage{fncychap}
+\usepackage{graphicx}
+\usepackage{etoolbox}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{calc}
+\usepackage{titlesec}
+\usepackage[labelsep=period]{caption}
+\graphicspath {{figures/}}
+
+\DeclareCaptionFormat{myformat}{\fontsize{13}{15}\selectfont#1#2#3}
+\captionsetup{format=myformat}
+
+\titlelabel{\thetitle.\,\,}
+\titleformat{\chapter}[display]
+  {\fontsize{14}{16}\selectfont\bfseries\centering}
+  {\MakeUppercase{\chaptertitlename}\ \thechapter}{0pt}{\fontsize{14}{16}\selectfont\MakeUppercase}
+\titlespacing{\chapter}{0pt}{0pt}{40pt}
+\titleformat*{\section}{\fontsize{14}{14}\selectfont\bfseries}
+\titleformat*{\subsection}{\fontsize{14}{14}\selectfont\bfseries\slshape}
+\titleformat*{\subsubsection}{\fontsize{14}{14}\slshape}
+\titlespacing\section{0pt}{6pt plus 4pt minus 2pt}{1pt plus 2pt minus 2pt}
+\titlespacing\subsection{0pt}{6pt plus 4pt minus 2pt}{1pt plus 2pt minus 2pt}
+\titlespacing\subsubsection{0pt}{6pt plus 4pt minus 2pt}{0pt plus 2pt minus 2pt}
+
+\usepackage{titletoc}
+\usepackage{tocloft}
+\cftsetpnumwidth{20pt}
+\titlecontents{chapter}
+  [0pt]
+  {}
+  {\fontsize{13.5}{14}\selectfont\MakeUppercase{\chaptername}\ \thecontentslabel.\,\,}
+  {}
+  {\cftdotfill{\cftdotsep}\contentspage}
+\renewcommand{\cftsecaftersnum}{.}%
+\renewcommand{\cftsubsecaftersnum}{.}%
+
+\renewcommand{\cftfigfont}{Hình~}
+\renewcommand{\cfttabfont}{Bảng~ }
+\renewcommand{\lstlistingname}{Mã nguồn}
+
+\renewcommand{\baselinestretch}{1.4}
+\flushbottom
+
+% -- Cau hinh khung code (listings) --
+\definecolor{codebg}{RGB}{244,244,244}
+\definecolor{codeframe}{RGB}{180,180,180}
+\definecolor{codekw}{RGB}{0,0,160}
+\definecolor{codecmt}{RGB}{0,128,0}
+\lstset{
+  basicstyle=\ttfamily\fontsize{9}{11}\selectfont,
+  backgroundcolor=\color{codebg},
+  frame=single, rulecolor=\color{codeframe},
+  breaklines=true, breakatwhitespace=false,
+  columns=fullflexible, keepspaces=true,
+  showstringspaces=false,
+  xleftmargin=8pt, xrightmargin=4pt, framexleftmargin=4pt,
+  aboveskip=8pt, belowskip=8pt,
+}
+% listings khong co san ngon ngu JSON -> dinh nghia toi thieu
+\lstdefinelanguage{json}{
+  morestring=[b]",
+  showstringspaces=false,
+  comment=[l]{//},
+}
+
+\usepackage[hidelinks, unicode]{hyperref}
+
+% Cho phep ngat dong sau dau gach duoi trong \texttt (ten bien/ham dai dai) de tranh tran le
+\renewcommand{\_}{\textunderscore\allowbreak}
+
+% Tieng Viet khong co luat ngat am tiet -> cho phep gian dong de tranh tran le van xuoi
+\setlength{\emergencystretch}{3em}
+\hfuzz=2pt
+
+\begin{document}
+\fontsize{13}{15.5}\selectfont
+
+\pagestyle{empty}
+\input{cover/bia-ngoai}
+\newpage
+\pagestyle{plain}
+\pagenumbering{gobble}
+\input{cover/bia-trong}
+\newpage
+\def\baselinestretch{1.3}
+\pagestyle{plain}
+\pagenumbering{gobble}
+\input{cover/loi-cam-doan}
+\newpage
+\input{cover/loi-cam-on}
+\newpage
+
+\pagenumbering{roman}
+
+\setlength{\parindent}{1cm}
+\setlength{\parskip}{0.6ex}
+
+\fontsize{13}{16}\selectfont
+\renewcommand{\contentsname}{\vspace{-70pt}\centerline{\fontsize{14}{16}\selectfont\MakeUppercase{Mục lục}}}
+\clearpage
+\phantomsection
+\addcontentsline{toc}{chapter}{Mục lục}
+\tableofcontents
+\clearpage
+\input{cover/tom-tat}
+\newpage
+\input{cover/viet-tat}
+\newpage
+
+\clearpage
+\phantomsection
+\addcontentsline{toc}{chapter}{Danh mục hình vẽ}
+\renewcommand{\listfigurename}{\vspace{-70pt}\centerline{\fontsize{14}{16}\selectfont{\MakeUppercase{Danh mục hình vẽ}}}}
+\listoffigures
+\fontsize{13}{16}\selectfont
+\newpage
+
+\clearpage
+\phantomsection
+\addcontentsline{toc}{chapter}{Danh mục bảng biểu}
+\renewcommand{\listtablename}{\vspace{-70pt}\centerline{\fontsize{14}{16}\selectfont{\MakeUppercase{Danh mục bảng biểu}}}}
+\listoftables
+\fontsize{13}{16}\selectfont
+\newpage
+
+\pagenumbering{arabic}
+\pagestyle{plain}
+
+\input{chapter/Chap0_Introduction}
+\newpage
+\input{chapter/Chap1_Background}
+\newpage
+\input{chapter/Chap2_Design}
+\newpage
+\input{chapter/Chap3_Implementation}
+\newpage
+\input{chapter/Chap4_Experiment}
+\newpage
+\input{chapter/Chap5_Conclusion}
+\newpage
+
+\renewcommand{\bibname}{Tài liệu tham khảo}
+\clearpage
+\phantomsection
+\addcontentsline{toc}{chapter}{{TÀI LIỆU THAM KHẢO}}
+
+\begin{thebibliography}{[99]}
+\fontsize{13}{16}\selectfont
+
+\bibitem{narayanan} A. Narayanan, V. Shmatikov, ``Robust De-anonymization of Large Sparse Datasets,'' \textit{Proc. IEEE Symposium on Security and Privacy (S\&P)}, pp.~111-125, 2008. DOI: \url{https://doi.org/10.1109/SP.2008.33}
+
+\bibitem{netflix} J. Bennett, S. Lanning, ``The Netflix Prize,'' \textit{Proc. KDD Cup and Workshop}, 2007. [Online]. Available: \url{https://web.archive.org/web/20090924184639/http://www.netflixprize.com/}
+
+\bibitem{movielens} F. M. Harper, J. A. Konstan, ``The MovieLens Datasets: History and Context,'' \textit{ACM Transactions on Interactive Intelligent Systems (TiiS)}, vol.~5, no.~4, art.~19, 2015. DOI: \url{https://doi.org/10.1145/2827872}
+
+\bibitem{sweeney} L. Sweeney, ``k-anonymity: A Model for Protecting Privacy,'' \textit{International Journal of Uncertainty, Fuzziness and Knowledge-Based Systems}, vol.~10, no.~5, pp.~557-570, 2002. DOI: \url{https://doi.org/10.1142/S0218488502001648}
+
+\bibitem{ldiversity} A. Machanavajjhala, J. Gehrke, D. Kifer, M. Venkitasubramaniam, ``l-diversity: Privacy Beyond k-anonymity,'' \textit{Proc. IEEE ICDE}, 2006. DOI: \url{https://doi.org/10.1109/ICDE.2006.1}
+
+\bibitem{tcloseness} N. Li, T. Li, S. Venkatasubramanian, ``t-Closeness: Privacy Beyond k-Anonymity and l-Diversity,'' \textit{Proc. IEEE ICDE}, pp.~106-115, 2007. DOI: \url{https://doi.org/10.1109/ICDE.2007.367856}
+
+\bibitem{aol} M. Barbaro, T. Zeller, ``A Face Is Exposed for AOL Searcher No.~4417749,'' \textit{The New York Times}, Aug.~2006. [Online]. Available: \url{https://www.nytimes.com/2006/08/09/technology/09aol.html}
+
+\bibitem{demontjoye} Y.-A. de Montjoye, C. A. Hidalgo, M. Verleysen, V. D. Blondel, ``Unique in the Crowd: The Privacy Bounds of Human Mobility,'' \textit{Scientific Reports}, vol.~3, art.~1376, 2013. DOI: \url{https://doi.org/10.1038/srep01376}
+
+\bibitem{demontjoye2} Y.-A. de Montjoye, L. Radaelli, V. K. Singh, A. ``Sandy'' Pentland, ``Unique in the Shopping Mall: On the Reidentifiability of Credit Card Metadata,'' \textit{Science}, vol.~347, no.~6221, pp.~536-539, 2015. DOI: \url{https://doi.org/10.1126/science.1256297}
+
+\bibitem{vppa} Electronic Privacy Information Center, ``The Video Privacy Protection Act (VPPA).'' [Online]. Available: \url{https://epic.org/privacy/vppa/}
+
+\bibitem{frankowski} D. Frankowski, D. Cosley, S. Sen, L. Terveen, J. Riedl, ``You Are What You Say: Privacy Risks of Public Mentions,'' \textit{Proc. ACM SIGIR}, pp.~565-572, 2006. DOI: \url{https://doi.org/10.1145/1148170.1148267}
+
+\bibitem{dwork} C. Dwork, ``Differential Privacy,'' \textit{Proc. ICALP 2006}, LNCS 4052, pp.~1-12, 2006. DOI: \url{https://doi.org/10.1007/11787006_1}
+
+\bibitem{netflixsuit} R. Singel, ``Netflix Spilled Your Brokeback Mountain Secret, Lawsuit Claims,'' \textit{Wired}, Dec.~2009. [Online]. Available: \url{https://www.wired.com/2009/12/netflix-privacy-lawsuit/}
+
+\bibitem{fastapi} S. Ram\'irez, ``FastAPI - Modern, Fast Web Framework for Building APIs with Python.'' [Online]. Available: \url{https://fastapi.tiangolo.com/}
+
+\bibitem{react} Meta Open Source, ``React - The Library for Web and Native User Interfaces.'' [Online]. Available: \url{https://react.dev/}
+
+\end{thebibliography}
+
+\newpage
+\input{cover/phu-luc}
+
+\end{document}

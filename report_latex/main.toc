@@ -1,0 +1,65 @@
+\contentsline {chapter}{Lời cam đoan}{}{section*.2}%
+\contentsline {chapter}{Lời cảm ơn}{}{section*.4}%
+\contentsline {chapter}{Mục lục}{i}{section*.6}%
+\contentsline {chapter}{Tóm tắt}{iv}{section*.7}%
+\contentsline {chapter}{Danh sách từ viết tắt}{v}{section*.9}%
+\contentsline {chapter}{Danh mục hình vẽ}{vi}{section*.11}%
+\contentsline {chapter}{Danh mục bảng biểu}{vii}{section*.12}%
+\contentsline {chapter}{Mở đầu}{1}{section*.13}%
+\contentsline {chapter}{\numberline {1}Cơ sở lý thuyết}{3}{chapter.1}%
+\contentsline {section}{\numberline {1.1}Bài toán ẩn danh hóa micro-data}{3}{section.1.1}%
+\contentsline {section}{\numberline {1.2}Các phương pháp ẩn danh truyền thống và hạn chế}{3}{section.1.2}%
+\contentsline {subsection}{\numberline {1.2.1}k-anonymity}{3}{subsection.1.2.1}%
+\contentsline {subsection}{\numberline {1.2.2}l-diversity, t-closeness và giới hạn chung}{4}{subsection.1.2.2}%
+\contentsline {subsection}{\numberline {1.2.3}Các tiền lệ rò rỉ thực tế}{5}{subsection.1.2.3}%
+\contentsline {section}{\numberline {1.3}Độ thưa và độ tương tự}{5}{section.1.3}%
+\contentsline {section}{\numberline {1.4}Mô hình tấn công và định nghĩa rò rỉ riêng tư}{6}{section.1.4}%
+\contentsline {subsection}{\numberline {1.4.1}Tri thức bổ trợ}{6}{subsection.1.4.1}%
+\contentsline {subsection}{\numberline {1.4.2}Hai kịch bản rò rỉ}{6}{subsection.1.4.2}%
+\contentsline {section}{\numberline {1.5}Thuật toán Scoreboard và Scoreboard-RH}{6}{section.1.5}%
+\contentsline {subsection}{\numberline {1.5.1}Trọng số theo độ hiếm}{7}{subsection.1.5.1}%
+\contentsline {subsection}{\numberline {1.5.2}Cộng gộp tương tự rating và thời gian}{7}{subsection.1.5.2}%
+\contentsline {subsection}{\numberline {1.5.3}Tiêu chí eccentricity}{7}{subsection.1.5.3}%
+\contentsline {section}{\numberline {1.6}Phân tích: cần bao nhiêu tri thức bổ trợ?}{8}{section.1.6}%
+\contentsline {section}{\numberline {1.7}Tình huống điển hình: tập Netflix Prize}{8}{section.1.7}%
+\contentsline {subsection}{\numberline {1.7.1}Kết quả giải ẩn danh}{8}{subsection.1.7.1}%
+\contentsline {subsection}{\numberline {1.7.2}Tấn công thực tế bằng dữ liệu IMDb}{9}{subsection.1.7.2}%
+\contentsline {subsection}{\numberline {1.7.3}Tính riêng tư xuôi (forward privacy)}{9}{subsection.1.7.3}%
+\contentsline {section}{\numberline {1.8}Liên hệ với an ninh di động}{9}{section.1.8}%
+\contentsline {chapter}{\numberline {2}Phân tích bài toán và thiết kế hệ thống}{11}{chapter.2}%
+\contentsline {section}{\numberline {2.1}Lựa chọn tập dữ liệu}{11}{section.2.1}%
+\contentsline {section}{\numberline {2.2}Kiến trúc hệ thống}{11}{section.2.2}%
+\contentsline {section}{\numberline {2.3}Mô hình dữ liệu}{12}{section.2.3}%
+\contentsline {section}{\numberline {2.4}Luồng tấn công}{13}{section.2.4}%
+\contentsline {chapter}{\numberline {3}Cài đặt thuật toán và nâng cấp ứng dụng}{14}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Cài đặt hàm cho điểm}{14}{section.3.1}%
+\contentsline {section}{\numberline {3.2}Cài đặt tiêu chí eccentricity}{15}{section.3.2}%
+\contentsline {section}{\numberline {3.3}Các nâng cấp so với bản demo ban đầu}{15}{section.3.3}%
+\contentsline {subsection}{\numberline {3.3.1}Sửa hàm cho điểm cho đúng công thức gốc}{15}{subsection.3.3.1}%
+\contentsline {subsection}{\numberline {3.3.2}Bổ sung chế độ ``không dùng ngày''}{15}{subsection.3.3.2}%
+\contentsline {subsection}{\numberline {3.3.3}Phơi bày trọng số độ hiếm trên giao diện}{15}{subsection.3.3.3}%
+\contentsline {subsection}{\numberline {3.3.4}Sinh nạn nhân thật và mô phỏng nhiễu}{16}{subsection.3.3.4}%
+\contentsline {subsection}{\numberline {3.3.5}Module thực nghiệm định lượng}{16}{subsection.3.3.5}%
+\contentsline {section}{\numberline {3.4}Công nghệ và môi trường}{16}{section.3.4}%
+\contentsline {chapter}{\numberline {4}Thực nghiệm và kết quả}{17}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Môi trường thực nghiệm}{17}{section.4.1}%
+\contentsline {section}{\numberline {4.2}Một phiên tấn công qua giao diện}{17}{section.4.2}%
+\contentsline {subsection}{\numberline {4.2.1}Tổng quan hệ thống}{17}{subsection.4.2.1}%
+\contentsline {subsection}{\numberline {4.2.2}Nạp tri thức bổ trợ}{17}{subsection.4.2.2}%
+\contentsline {subsection}{\numberline {4.2.3}Kết quả định danh}{17}{subsection.4.2.3}%
+\contentsline {subsection}{\numberline {4.2.4}Tính bền vững trước thông tin nhiễu}{18}{subsection.4.2.4}%
+\contentsline {section}{\numberline {4.3}Kiểm chứng trên dòng lệnh}{18}{section.4.3}%
+\contentsline {section}{\numberline {4.4}Kết quả định lượng}{19}{section.4.4}%
+\contentsline {section}{\numberline {4.5}Phân tích kết quả}{21}{section.4.5}%
+\contentsline {section}{\numberline {4.6}Tình huống thất bại và ý nghĩa của ngưỡng}{23}{section.4.6}%
+\contentsline {chapter}{\numberline {5}Thảo luận, phòng vệ và kết luận}{25}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Ý nghĩa về quyền riêng tư}{25}{section.5.1}%
+\contentsline {section}{\numberline {5.2}Các biện pháp phòng vệ}{25}{section.5.2}%
+\contentsline {subsection}{\numberline {5.2.1}Vì sao k-anonymity không đủ}{25}{subsection.5.2.1}%
+\contentsline {subsection}{\numberline {5.2.2}Riêng tư vi phân (Differential Privacy)}{25}{subsection.5.2.2}%
+\contentsline {subsection}{\numberline {5.2.3}Các biện pháp thực tiễn khác}{25}{subsection.5.2.3}%
+\contentsline {section}{\numberline {5.3}Hạn chế của nghiên cứu}{26}{section.5.3}%
+\contentsline {section}{\numberline {5.4}Kết luận}{26}{section.5.4}%
+\contentsline {chapter}{{TÀI LIỆU THAM KHẢO}}{27}{section*.30}%
+\contentsline {chapter}{{PHỤ LỤC}}{29}{section*.32}%
+\contentsfinish 

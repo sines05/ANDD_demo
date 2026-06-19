@@ -1,0 +1,76 @@
+\chapter{Cài đặt thuật toán và nâng cấp ứng dụng}
+\label{chap:impl}
+
+Chương này trình bày chi tiết cách cài đặt thuật toán Scoreboard-RH và những tối ưu, nâng cấp chúng em thực hiện so với bản demo ban đầu. Mã nguồn đầy đủ của engine tấn công được in ở Phụ lục~(Mã nguồn~\ref{lst:engine}).
+
+\section{Cài đặt hàm cho điểm}
+
+Trái tim của hệ thống là hàm \texttt{run\_attack} trong lớp \texttt{AttackEngine}. Để đạt tốc độ, toàn bộ phép tính được vector hóa bằng pandas/numpy thay vì lặp trên từng người dùng. Quy trình:
+
+\begin{enumerate}[1.]
+	\item Lọc ra mọi lượt đánh giá liên quan tới các phim trong aux (dùng \texttt{ratings\_df}\allowbreak\texttt{.isin(target)}).
+	\item Với mỗi phim $i$ trong aux: tính vector độ lệch điểm $|\rho_i - \rho'_i|$ cho tất cả người từng xem phim đó, đưa qua hàm mũ suy giảm, nhân trọng số $wt(i)$, rồi cộng dồn vào điểm của từng người.
+	\item Chuẩn hóa điểm về $[0,1]$, sắp xếp giảm dần, tính eccentricity và đối chiếu ngưỡng.
+\end{enumerate}
+
+Đoạn lõi tính điểm (trích từ Mã nguồn~\ref{lst:engine}):
+
+\begin{lstlisting}[language=Python]
+# Thanh phan rating: exp(-|rho - rho'| / rho_0)
+r_diff = np.abs(m_ratings["rating"] - r_v)
+sim = np.exp(-r_diff / rho_0)
+denom += wt
+# Thanh phan thoi gian (cong vao, dung cong thuc paper)
+if use_dates and t_v is not None:
+    t_diff = np.abs(m_ratings["timestamp"] - t_v)
+    sim = sim + np.exp(-t_diff / d_0)
+    denom += wt
+temp = pd.Series((wt * sim).values, index=m_ratings["user_id"])
+user_scores = user_scores.add(temp, fill_value=0)
+\end{lstlisting}
+
+Trọng số $wt(i)$ được tính sẵn một lần khi nạp dữ liệu, dùng $\log(\mathrm{supp}+1)$ để ổn định số học (tránh chia cho $\log 1 = 0$ với phim chỉ một người xem):
+
+\begin{lstlisting}[language=Python]
+supp = self.ratings_df.groupby("movie_id").size()
+self.movie_weights = 1.0 / np.log(supp + 1)
+\end{lstlisting}
+
+\section{Cài đặt tiêu chí eccentricity}
+
+Sau khi có điểm chuẩn hóa, eccentricity được tính trực tiếp theo công thức~(\ref{eq:ecc}):
+
+\begin{lstlisting}[language=Python]
+sorted_scores = norm_scores.sort_values(ascending=False)
+max_score = sorted_scores.iloc[0]
+max2_score = sorted_scores.iloc[1]
+sigma = sorted_scores.std()
+eccentricity = (max_score - max2_score) / sigma if sigma > 0 else 0.0
+if eccentricity > phi:
+    # ... ket luan danh tinh, truy xuat toan bo lich su nan nhan
+\end{lstlisting}
+
+Chỉ khi vượt ngưỡng $\phi$, hệ thống mới truy vấn \texttt{JOIN} để lấy toàn bộ lịch sử của người bị định danh - đây là dữ liệu ``bị phơi bày''.
+
+\section{Các nâng cấp so với bản demo ban đầu}
+
+Bản demo được cung cấp ban đầu chạy được nhưng có một số điểm chưa trung thực với bài báo và còn thiếu tính năng. Chúng em đã thực hiện các nâng cấp sau:
+
+\subsection{Sửa hàm cho điểm cho đúng công thức gốc}
+Bản demo ban đầu nhân hai thành phần tương tự ($\mathrm{sim}_r \times \mathrm{sim}_t$). Cách này khiến điểm sụp về 0 khi chỉ một thành phần lệch, không khớp với công thức~(\ref{eq:score}) của bài báo vốn cộng hai thành phần. Chúng em đã sửa lại thành phép cộng đúng như~(\ref{eq:score}). Khác biệt này quan trọng: phép cộng cho phép thuật toán vẫn ghi nhận một phim ngay cả khi ngày xem sai lệch nhiều - đúng tinh thần ``bền vững'' (robust) trong tên thuật toán.
+
+\subsection{Bổ sung chế độ ``không dùng ngày''}
+Chúng em thêm tham số \texttt{use\_dates}: khi tắt, hàm cho điểm bỏ hẳn thành phần thời gian, mô phỏng kịch bản kẻ tấn công chỉ biết \textit{phim và điểm} (tái hiện Fig.~8 của bài báo). Nhờ đó báo cáo có thể đo riêng đóng góp của thông tin ngày (Chương~\ref{chap:exp}).
+
+\subsection{Phơi bày trọng số độ hiếm trên giao diện}
+Endpoint \texttt{/movies/search} và \texttt{/auto\_aux} nay trả về kèm \texttt{support} (số người xem) và \texttt{weight} ($wt(i)$) của từng phim. Giao diện hiển thị trực tiếp các giá trị này (Hình~\ref{fig:ui_aux}), giúp người xem hiểu vì sao phim hiếm lại ``đắt giá'' cho việc định danh.
+
+\subsection{Sinh nạn nhân thật và mô phỏng nhiễu}
+Chúng em bổ sung hàm \texttt{sample\_aux\_from\_user} (trong Mã nguồn~\ref{lst:engine}) cho phép lấy ``dấu vân tay'' của một người dùng có thật trong CSDL, rồi cố ý thêm nhiễu - sai số điểm $\pm 1$ và sai số ngày $\pm 14$ ngày - trước khi tấn công. Tính năng này phục vụ hai mục đích: (1) tạo kịch bản demo lặp lại được; (2) chứng minh trực tiếp tính bền vững của thuật toán (Định lý~1 của bài báo). Khi sinh aux có thể ưu tiên phim hiếm (\texttt{prefer\_rare}) để thấy rõ sức mạnh của các thuộc tính hiếm.
+
+\subsection{Module thực nghiệm định lượng}
+Cuối cùng, chúng em viết \texttt{experiment.py} (Mã nguồn~\ref{lst:experiment}) để chạy tấn công hàng loạt trên hàng trăm nạn nhân, đo \textit{tỉ lệ định danh đúng} và \textit{eccentricity trung bình} theo số lượng phim biết trước, trong bốn kịch bản khác nhau. Đây là cơ sở cho các biểu đồ định lượng ở Chương~\ref{chap:exp}. Một lần định danh được tính là thành công chỉ khi $\mathrm{ecc} > \phi$ \textit{và} người được chọn đúng là nạn nhân thật (true positive).
+
+\section{Công nghệ và môi trường}
+
+Backend dùng Python 3.12, FastAPI~\cite{fastapi}, pandas, numpy, SQLAlchemy; frontend dùng React~18~\cite{react}, Vite, Tailwind CSS, Recharts. Vite proxy đường dẫn \texttt{/api} sang backend ở cổng 8000, tránh vấn đề CORS khi phát triển. Hướng dẫn cài đặt và chạy đầy đủ nằm ở Phụ lục.
