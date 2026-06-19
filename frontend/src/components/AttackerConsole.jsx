@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Search, Plus, Trash2, Zap, ShieldAlert, Wand2, CalendarOff } from 'lucide-react';
-import axios from 'axios';
-
-const AttackerConsole = ({ onAttack, loading }) => {
+const AttackerConsole = ({ onAttack, loading, attackEngine }) => {
   const [movies, setMovies] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [auxInfo, setAuxInfo] = useState([]);
@@ -14,14 +12,16 @@ const AttackerConsole = ({ onAttack, loading }) => {
   const [genLoading, setGenLoading] = useState(false);
 
   useEffect(() => {
-    if (searchTerm.length > 2) {
-      axios.get(`/api/movies/search?q=${searchTerm}`)
-        .then(res => setMovies(res.data))
-        .catch(err => console.error(err));
+    if (attackEngine && searchTerm.length > 2) {
+      const q = searchTerm.toLowerCase();
+      const filtered = attackEngine.movies.filter(m =>
+        m.title.toLowerCase().includes(q)
+      ).slice(0, 10);
+      setMovies(filtered);
     } else {
       setMovies([]);
     }
-  }, [searchTerm]);
+  }, [searchTerm, attackEngine]);
 
   const addAux = () => {
     if (!selectedMovie) return;
@@ -43,19 +43,32 @@ const AttackerConsole = ({ onAttack, loading }) => {
     setAuxInfo(auxInfo.filter(a => a.movie_id !== id));
   };
 
-  // Tự sinh "dấu vân tay" từ một nạn nhân CÓ THẬT, có thể thêm nhiễu để minh
-  // hoạ tính bền vững của thuật toán (sai ±1 điểm, ±14 ngày).
-  const autoFill = async (noisy) => {
+  const autoFill = (noisy) => {
+    if (!attackEngine) return;
     setGenLoading(true);
     try {
-      const params = noisy
-        ? 'num_movies=6&rating_error=1&date_error_days=14&prefer_rare=true'
-        : 'num_movies=4&prefer_rare=true';
-      const res = await axios.get(`/api/auto_aux?${params}&seed=${Math.floor(Math.random() * 10000)}`);
-      setVictimId(res.data.victim_user_id);
-      setAuxInfo(res.data.aux_info.map(a => ({
-        movie_id: a.movie_id, title: a.title, rating: a.rating,
-        date: a.date, weight: a.weight, support: a.support,
+      const userId = Math.floor(Math.random() * 943) + 1;
+      const seed = Math.floor(Math.random() * 10000);
+      const numMovies = noisy ? 6 : 4;
+      const ratingError = noisy ? 1 : 0;
+      const dateErrorDays = noisy ? 14 : 0;
+
+      const aux = attackEngine.sampleAuxFromUser(userId, {
+        numMovies,
+        ratingError,
+        dateErrorDays,
+        seed,
+        preferRare: true
+      });
+
+      setVictimId(userId);
+      setAuxInfo(aux.map(a => ({
+        movie_id: a.movie_id,
+        title: a.title,
+        rating: a.rating,
+        date: a.date,
+        weight: a.weight,
+        support: a.support
       })));
     } catch (e) {
       console.error(e);

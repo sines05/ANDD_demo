@@ -4,34 +4,101 @@ import { Shield, Database, Activity, Github } from 'lucide-react';
 import Dashboard from './components/Dashboard';
 import AttackerConsole from './components/AttackerConsole';
 import ProcessVisualizer from './components/ProcessVisualizer';
+import { AttackEngine } from './utils/attackEngine';
 
 function App() {
   const [stats, setStats] = useState(null);
   const [attackResult, setAttackResult] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [attackEngine, setAttackEngine] = useState(null);
+  const [dbLoading, setDbLoading] = useState(true);
+  const [dbError, setDbError] = useState(null);
 
   useEffect(() => {
-    axios.get('/api/stats')
-      .then(res => setStats(res.data))
-      .catch(err => console.error("Failed to fetch stats", err));
+    const loadDatabase = async () => {
+      try {
+        setDbLoading(true);
+        const [moviesRes, ratingsRes] = await Promise.all([
+          axios.get('/data/movies.json'),
+          axios.get('/data/movie_ratings.json')
+        ]);
+        
+        const engine = new AttackEngine(moviesRes.data, ratingsRes.data);
+        setAttackEngine(engine);
+        
+        setStats({
+          total_users: 943,
+          total_movies: 1682,
+          total_ratings: 100000,
+          sparsity: 0.93695330634278,
+          rating_distribution: [
+            { rating: 1, count: 6110 },
+            { rating: 2, count: 11370 },
+            { rating: 3, count: 27145 },
+            { rating: 4, count: 34174 },
+            { rating: 5, count: 21201 }
+          ]
+        });
+      } catch (err) {
+        console.error("Failed to load MovieLens data files", err);
+        setDbError("Không thể tải cơ sở dữ liệu MovieLens. Vui lòng tải lại trang.");
+      } finally {
+        setDbLoading(false);
+      }
+    };
+
+    loadDatabase();
   }, []);
 
-  const handleAttack = async (auxInfo, options = {}) => {
+  const handleAttack = (auxInfo, options = {}) => {
+    if (!attackEngine) return;
     setLoading(true);
-    try {
-      const useDates = options.useDates !== false;
-      const response = await axios.post(
-        `/api/attack?use_dates=${useDates}`,
-        { aux_info: auxInfo }
-      );
-      setAttackResult(response.data);
-    } catch (err) {
-      console.error("Attack failed", err);
-      alert("Attack failed. Check console for details.");
-    } finally {
-      setLoading(false);
-    }
+    setTimeout(() => {
+      try {
+        const useDates = options.useDates !== false;
+        const res = attackEngine.runAttack(auxInfo, { useDates });
+        setAttackResult(res);
+      } catch (err) {
+        console.error("Attack failed", err);
+        alert("Có lỗi xảy ra khi thực thi thuật toán giải ẩn danh.");
+      } finally {
+        setLoading(false);
+      }
+    }, 450);
   };
+
+  if (dbLoading) {
+    return (
+      <div className="min-h-screen bg-slate-900 text-white flex flex-col items-center justify-center font-sans">
+        <div className="bg-slate-800 p-8 rounded-2xl border border-slate-700 shadow-2xl flex flex-col items-center max-w-md text-center">
+          <div className="bg-blue-600 p-3 rounded-2xl mb-6 animate-pulse">
+            <Shield className="w-8 h-8 text-white" />
+          </div>
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500 mb-4"></div>
+          <h2 className="text-xl font-bold mb-2">Đang tải cơ sở dữ liệu...</h2>
+          <p className="text-sm text-slate-400 leading-relaxed">
+            Đang nạp toàn bộ 100.000 đánh giá và 1.682 bộ phim của tập MovieLens 100k vào trình duyệt để chạy mô phỏng trực tiếp tại máy của bạn.
+          </p>
+        </div>
+      </div>
+    );
+  }
+
+  if (dbError) {
+    return (
+      <div className="min-h-screen bg-slate-900 text-white flex flex-col items-center justify-center font-sans">
+        <div className="bg-slate-800 p-8 rounded-2xl border border-red-500/30 shadow-2xl flex flex-col items-center max-w-md text-center">
+          <div className="bg-red-500/20 p-3 rounded-2xl mb-6">
+            <Shield className="w-8 h-8 text-red-500" />
+          </div>
+          <h2 className="text-xl font-bold mb-2 text-red-500">Lỗi tải dữ liệu</h2>
+          <p className="text-sm text-slate-400 leading-relaxed">
+            {dbError}
+          </p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-slate-100 text-slate-900 font-sans">
@@ -71,7 +138,7 @@ function App() {
 
             <section>
               <h2 className="text-sm font-bold text-slate-500 uppercase mb-4 tracking-widest">Vector tấn công</h2>
-              <AttackerConsole onAttack={handleAttack} loading={loading} />
+              <AttackerConsole onAttack={handleAttack} loading={loading} attackEngine={attackEngine} />
             </section>
           </div>
 
