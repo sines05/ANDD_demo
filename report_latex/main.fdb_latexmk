@@ -1,5 +1,5 @@
 # Fdb version 4
-["pdflatex"] 1781339226.40245 "main.tex" "main.pdf" "main" 1781339228.84401 0
+["pdflatex"] 1781876739.65284 "main.tex" "main.pdf" "main" 1781876741.48165 0
   "/etc/texmf/web2c/texmf.cnf" 1781300888.58968 475 c0e671620eb5563b2130f56340a5fde8 ""
   "/usr/share/texlive/texmf-dist/fonts/enc/dvips/vntex/t5.enc" 1136849721 7824 21ade6c3c7fd67cb4ace8dbc91c53118 ""
   "/usr/share/texlive/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
@@ -237,12 +237,12 @@
   "figures/ui_04_exposed_history.png" 1781329139.26684 120986 dfe371f53700ef0174d8ee6ed1eed5d1 ""
   "figures/ui_05_robust_noisy.png" 1781329144.52085 58278 5095261bf5d08a580bf744634c55ea37 ""
   "figures/ui_06_top_candidates.png" 1781329139.84884 156628 0c85132cb18ac7eacc60f2cb9854d806 ""
-  "main.aux" 1781339228.70923 17659 ccb2373ce449d54fd2863b22be045ae2 "pdflatex"
-  "main.lof" 1781339228.71123 2017 44f3c44081ac88b2888cd74a6c4c7742 "pdflatex"
-  "main.lot" 1781339228.71123 671 554b8062d33680c1c6d323480470b6a0 "pdflatex"
-  "main.out" 1781339228.71023 13400 e716ba67f796da4bbc9e4e314ce74785 "pdflatex"
-  "main.tex" 1781338333.97388 8114 091567ad51c0ec6d10690117d6cd0b04 ""
-  "main.toc" 1781339228.71123 6049 d87b4fbb4ec7f2b2c82bac7cd810b544 "pdflatex"
+  "main.aux" 1781876741.33715 17659 ccb2373ce449d54fd2863b22be045ae2 "pdflatex"
+  "main.lof" 1781876741.33915 2017 44f3c44081ac88b2888cd74a6c4c7742 "pdflatex"
+  "main.lot" 1781876741.33915 671 554b8062d33680c1c6d323480470b6a0 "pdflatex"
+  "main.out" 1781876741.33915 13400 e716ba67f796da4bbc9e4e314ce74785 "pdflatex"
+  "main.tex" 1781876733.39113 8173 5615db4f3cf7b2b91d1479cc9ebf530e ""
+  "main.toc" 1781876741.33915 6049 d87b4fbb4ec7f2b2c82bac7cd810b544 "pdflatex"
   (generated)
   "main.aux"
   "main.lof"
