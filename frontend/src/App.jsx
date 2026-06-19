@@ -115,13 +115,30 @@ function App() {
             </div>
           </div>
           <div className="flex items-center gap-6 text-sm font-medium text-slate-500">
-            <span className="hover:text-blue-600 transition-colors flex items-center gap-2">
+            <a 
+              href="https://grouplens.org/datasets/movielens/100k/" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="hover:text-blue-600 transition-colors flex items-center gap-2"
+            >
               <Database className="w-4 h-4" /> Dataset
-            </span>
-            <span className="hover:text-blue-600 transition-colors flex items-center gap-2">
+            </a>
+            <a 
+              href="https://doi.org/10.1109/SP.2008.33" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="hover:text-blue-600 transition-colors flex items-center gap-2"
+            >
               <Activity className="w-4 h-4" /> Scoreboard-RH
-            </span>
-            <Github className="w-5 h-5" />
+            </a>
+            <a 
+              href="https://github.com/sines05/ANDD_demo" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="hover:text-slate-900 transition-colors flex items-center"
+            >
+              <Github className="w-5 h-5" />
+            </a>
           </div>
         </div>
       </header>
